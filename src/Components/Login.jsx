@@ -2,17 +2,19 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
-import { useLocation, useFormik } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import loginJPG from '../../assets/images/login.jpg';
 import useAuth from '../hooks/index.jsx';
 import routes from '../routes.js';
 
-const validationSchema = Yup.object({
-  username: Yup.string().trim().min(5).max(10)
+const logInSchema = Yup.object().shape({
+  username: Yup.string().trim()
+    .min(5, 'username must be at least 5 characters')
+    .max(10, 'username must be at most 10 characters')
     .required(),
-  password: Yup.string().trim().min(5).max()
+  password: Yup.string().trim()
     .required(),
 });
 
@@ -28,32 +30,30 @@ const Login = () => {
     textInput.current.focus();
   }, []);
 
-  const { handleSubmit, handleChange, values } = useFormik({
+  const { handleSubmit, handleChange, value } = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    validationSchema,
-    onSubmit: (value) => {
+    logInSchema,
+    onSubmit: async (values) => {
       const loginPath = routes.loginUserPath();
 
-      validationSchema.validate(value);
-      axios.post(loginPath, value)
-        .then((response) => {
-          setAuthFailed(false);
-          localStorage.setItem('userId', JSON.stringify(response.data));
-          auth.logIn();
-          const { from } = location.state || { from: { pathname: '/' } };
-          history.replace(from);
-        })
-        .catch((err) => {
-          if (err.isAxiosError && err.response.status === 401) {
-            setAuthFailed(true);
-            textInput.current.select();
-            return;
-          }
-          throw err;
-        });
+      try {
+        setAuthFailed(false);
+        const { data } = await axios.post(loginPath, values);
+        localStorage.setItem('userId', JSON.stringify(data));
+        auth.logIn();
+        const { from } = location.state || { from: { pathname: '/' } };
+        history.replace(from);
+      } catch (err) {
+        if (err.isAxiosError && err.response.status === 401) {
+          setAuthFailed(true);
+          textInput.current.select();
+          return;
+        }
+        throw err;
+      }
     },
   });
 
@@ -73,7 +73,7 @@ const Login = () => {
                   <Form.Control
                     onChange={handleChange}
                     ref={textInput}
-                    value={values.username}
+                    value={value.username}
                     isInvalid={authFailed}
                     id="username"
                     name="username"
@@ -87,7 +87,7 @@ const Login = () => {
                 <Form.Group className="form-floating mb-4">
                   <Form.Control
                     onChange={handleChange}
-                    value={values.password}
+                    value={value.password}
                     isInvalid={authFailed}
                     id="password"
                     name="password"
