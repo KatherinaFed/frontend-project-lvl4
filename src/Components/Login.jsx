@@ -10,12 +10,12 @@ import useAuth from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 const logInSchema = Yup.object().shape({
-  username: Yup.string().trim()
+  username: Yup.string()
+    .trim()
     .min(5, 'username must be at least 5 characters')
     .max(10, 'username must be at most 10 characters')
     .required(),
-  password: Yup.string().trim()
-    .required(),
+  password: Yup.string().trim().required(),
 });
 
 const Login = () => {
@@ -64,10 +64,17 @@ const Login = () => {
           <Card className="card shadow-sm">
             <Card.Body className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={loginJPG} className="rounded-circle" alt="loginPicture" />
+                <img
+                  src={loginJPG}
+                  className="rounded-circle"
+                  alt="loginPicture"
+                />
               </div>
 
-              <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={handleSubmit}>
+              <Form
+                className="col-12 col-md-6 mt-3 mt-mb-0"
+                onSubmit={handleSubmit}
+              >
                 <h1 className="text-center mb-4">Войти</h1>
                 <Form.Group className="form-floating mb-3">
                   <Form.Control
@@ -97,9 +104,16 @@ const Login = () => {
                     type="password"
                   />
                   <Form.Label htmlFor="password">Пароль</Form.Label>
-                  <Form.Control.Feedback type="invalid">The username or password is incorrect</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    The username or password is incorrect
+                  </Form.Control.Feedback>
                 </Form.Group>
-                <Button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</Button>
+                <Button
+                  type="submit"
+                  className="w-100 mb-3 btn btn-outline-primary"
+                >
+                  Войти
+                </Button>
               </Form>
             </Card.Body>
           </Card>
