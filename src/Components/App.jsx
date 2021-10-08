@@ -12,8 +12,9 @@ import Login from './Login.jsx';
 const App = () => (
   <Router>
     <Switch>
-      <Route path={routes.mainPage() || routes.loginPage()} component={Login} />
-      <Route component={NotFound} />
+      <Route path={routes.mainPage()} component={Login} />
+      <Route path={routes.loginUserPath()} component={Login} />
+      <Route path="*" component={NotFound} />
     </Switch>
   </Router>
 );

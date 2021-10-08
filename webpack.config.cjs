@@ -18,6 +18,7 @@ module.exports = {
     compress: true,
     port: 8080,
     host: '0.0.0.0',
+    publicPath: '/assets/',
     historyApiFallback: true,
   },
   plugins: [
@@ -26,7 +27,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(jsx|js)?$/,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
@@ -38,6 +39,10 @@ module.exports = {
           { loader: 'postcss-loader' },
           { loader: 'sass-loader' },
         ],
+      },
+      {
+        test: /\.jpg/,
+        type: 'asset/inline',
       },
     ],
   },

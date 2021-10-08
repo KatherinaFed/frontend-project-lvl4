@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/KatherinaFed/frontend-project-lvl4#readme",
   "dependencies": {
+    "axios": "^0.22.0",
     "bootstrap": "^5.1.1",
     "core-js": "^3.18.1",
     "debug": "^4.3.2",

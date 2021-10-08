@@ -1,30 +1,60 @@
-import React from 'react';
-import {
-  Button, Card, Form, FormControl, FormGroup, FormLabel,
-} from 'react-bootstrap';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Card, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
-import { useFormik } from 'formik';
+import { useLocation, useFormik } from 'formik';
+import { useHistory } from 'react-router-dom';
 
-import loginJPG from './images/login.jpg';
+import loginJPG from '../../assets/images/login.jpg';
+import useAuth from '../hooks/index.jsx';
+import routes from '../routes.js';
+
+const validationSchema = Yup.object({
+  username: Yup.string().trim().min(5).max(10)
+    .required(),
+  password: Yup.string().trim().min(5).max()
+    .required(),
+});
 
 const Login = () => {
-  const validationSchema = Yup.object({
-    username: Yup.string().trim()
-      .min(3, 'Слишком короткое имя!')
-      .max(20, 'Слишком длинное имя!')
-      .required('Required username!'),
-    password: Yup.string().trim()
-      .min(6, 'Слишком короткий пароль!')
-      .max(10, 'Слишком длинный пароль!')
-      .required('Required password!'),
-  });
+  const [authFailed, setAuthFailed] = useState(false);
 
-  const formik = useFormik({
+  const auth = useAuth();
+  const history = useHistory();
+  const location = useLocation();
+
+  const textInput = useRef();
+  useEffect(() => {
+    textInput.current.focus();
+  }, []);
+
+  const { handleSubmit, handleChange, values } = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
     validationSchema,
+    onSubmit: (value) => {
+      const loginPath = routes.loginUserPath();
+
+      validationSchema.validate(value);
+      axios.post(loginPath, value)
+        .then((response) => {
+          setAuthFailed(false);
+          localStorage.setItem('userId', JSON.stringify(response.data));
+          auth.logIn();
+          const { from } = location.state || { from: { pathname: '/' } };
+          history.replace(from);
+        })
+        .catch((err) => {
+          if (err.isAxiosError && err.response.status === 401) {
+            setAuthFailed(true);
+            textInput.current.select();
+            return;
+          }
+          throw err;
+        });
+    },
   });
 
   return (
@@ -36,31 +66,39 @@ const Login = () => {
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src={loginJPG} className="rounded-circle" alt="loginPicture" />
               </div>
-              <Form className="col-12 col-md-6 mt-3 mt-mb-0">
+
+              <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={handleSubmit}>
                 <h1 className="text-center mb-4">Войти</h1>
-                <FormGroup className="form-floating mb-3">
-                  <FormControl
+                <Form.Group className="form-floating mb-3">
+                  <Form.Control
+                    onChange={handleChange}
+                    ref={textInput}
+                    value={values.username}
+                    isInvalid={authFailed}
                     id="username"
                     name="username"
-                    autocomplete="username"
+                    autoComplete="username"
                     required
                     placeholder="Ваш ник"
-                    value={formik.initialValues.username}
                   />
-                  <FormLabel for="username">Ваш ник</FormLabel>
-                </FormGroup>
-                <FormGroup className="form-floating mb-4">
-                  <FormControl
+                  <Form.Label htmlFor="username">Ваш ник</Form.Label>
+                </Form.Group>
+
+                <Form.Group className="form-floating mb-4">
+                  <Form.Control
+                    onChange={handleChange}
+                    value={values.password}
+                    isInvalid={authFailed}
                     id="password"
                     name="password"
-                    autocomplete="current-password"
+                    autoComplete="current-password"
                     required
                     placeholder="Пароль"
                     type="password"
-                    value={formik.initialValues.password}
                   />
-                  <FormLabel for="password">Пароль</FormLabel>
-                </FormGroup>
+                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                  <Form.Control.Feedback type="invalid">The username or password is incorrect</Form.Control.Feedback>
+                </Form.Group>
                 <Button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</Button>
               </Form>
             </Card.Body>
