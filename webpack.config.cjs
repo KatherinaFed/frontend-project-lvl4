@@ -26,7 +26,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(jsx|js)?$/,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
@@ -38,6 +38,10 @@ module.exports = {
           { loader: 'postcss-loader' },
           { loader: 'sass-loader' },
         ],
+      },
+      {
+        test: /\.jpg/,
+        type: 'asset/inline',
       },
     ],
   },
