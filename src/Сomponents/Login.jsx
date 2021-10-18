@@ -10,11 +10,7 @@ import useAuth from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 const logInSchema = Yup.object().shape({
-  username: Yup.string()
-    .trim()
-    .min(5, 'username must be at least 5 characters')
-    .max(10, 'username must be at most 10 characters')
-    .required(),
+  username: Yup.string().trim().min(5).max(10).required(),
   password: Yup.string().trim().required(),
 });
 
@@ -30,18 +26,18 @@ const Login = () => {
     textInput.current.focus();
   }, []);
 
-  const { handleSubmit, handleChange, value } = useFormik({
+  const { handleSubmit, handleChange, values } = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
     logInSchema,
-    onSubmit: async (values) => {
-      const loginPath = routes.loginUserPath();
+    onSubmit: async (value) => {
+      const loginPath = routes.loginPath();
 
       try {
         setAuthFailed(false);
-        const { data } = await axios.post(loginPath, values);
+        const { data } = await axios.post(loginPath, value);
         localStorage.setItem('userId', JSON.stringify(data));
         auth.logIn();
         const { from } = location.state || { from: { pathname: '/' } };
@@ -80,7 +76,7 @@ const Login = () => {
                   <Form.Control
                     onChange={handleChange}
                     ref={textInput}
-                    value={value.username}
+                    value={values.username}
                     isInvalid={authFailed}
                     id="username"
                     name="username"
@@ -94,7 +90,7 @@ const Login = () => {
                 <Form.Group className="form-floating mb-4">
                   <Form.Control
                     onChange={handleChange}
-                    value={value.password}
+                    value={values.password}
                     isInvalid={authFailed}
                     id="password"
                     name="password"
@@ -110,7 +106,7 @@ const Login = () => {
                 </Form.Group>
                 <Button
                   type="submit"
-                  className="w-100 mb-3 btn btn-outline-primary"
+                  className="w-100 mb-3 btn btn-primary"
                 >
                   Войти
                 </Button>
