@@ -1,20 +1,19 @@
 import React, { useRef, useEffect } from 'react';
-import {
-  Button,
-  Col,
-  Form,
-  FormControl,
-  InputGroup,
-} from 'react-bootstrap';
+import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useSocket } from '../hooks/index.js';
 
 const inputSchema = Yup.object().shape({
   message: Yup.string().trim().min(1).max(400).required(),
 });
 
 const MessageForm = () => {
+  const { currentChannelId } = useSelector((state) => state.chat);
+  const { username } = JSON.parse(localStorage.getItem('userId'));
+  const socket = useSocket();
+
   const textInput = useRef();
   useEffect(() => {
     textInput.current.focus();
@@ -25,15 +24,29 @@ const MessageForm = () => {
       message: '',
     },
     inputSchema,
-    onSubmit: () => {},
+    onSubmit: ({ message }, { resetForm, setSubmitting }) => {
+      setSubmitting(false);
+
+      const newMessage = {
+        message,
+        channelId: currentChannelId,
+        username,
+      };
+
+      socket.newMessage(newMessage, ({ status }) => {
+        if (status === 'ok') {
+          setSubmitting(true);
+          resetForm();
+        }
+      });
+    },
   });
 
   return (
-    <div className="mt-auto py-3 px-5">
-      <Form onSubmit={handleSubmit} className="py-1 border rounded-2">
-        <InputGroup>
+    <Form onSubmit={handleSubmit} className="form-label">
+      <Row className="align-items-center">
+        <Col className="p-0">
           <FormControl
-            className="border-0 p-0 ps-2"
             ref={textInput}
             data-testid="new-message"
             placeholder="Ваше сообщение..."
@@ -43,56 +56,69 @@ const MessageForm = () => {
             onChange={handleChange}
             disabled={isSubmitting}
           />
+        </Col>
+        <Col xs="auto">
           <Button
             className="btn btn-group-vertical"
             type="submit"
-            disabled={isSubmitting}
-            variant="light"
+            disabled={values.message === '' || isSubmitting}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
-              />
-            </svg>
+            Отправить
           </Button>
-        </InputGroup>
-      </Form>
-    </div>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 
 const Messages = () => {
-  const { channels, currentChannelId, messages } = useSelector(
-    (state) => state.chat,
+  const { channels, currentChannelId, messages } = useSelector((state) => state.chat);
+
+  const buildMessage = ({ message, id, username }) => (
+    <div key={id} className="text-break mb-2">
+      <b>{username}</b>
+      {': '}
+      {message}
+    </div>
   );
 
-  const currentChannelName = () => {
-    const channel = channels.find(({ id }) => id === currentChannelId);
-    console.log(channel);
+  const renderMessages = () => {
+    const render = messages
+      .filter(({ channelId }) => channelId === currentChannelId)
+      .map((message) => buildMessage(message));
 
-    return channel ? channel.name : '';
+    return (
+      <div
+        className="chat-messages h-100 overflow-auto text-break px-5"
+        id="messages-box"
+      >
+        {render}
+      </div>
+    );
+  };
+
+  const renderChannel = () => {
+    const currentChannel = channels.find(({ id }) => id === currentChannelId);
+
+    const countOfMessages = messages.filter(({ channelId }) => channelId === currentChannelId);
+
+    return (
+      <div className="bg-light mx-0 mb-4 p-3 shadow-sm small">
+        <p className="m-0">
+          <b>{currentChannel ? currentChannel.name : null}</b>
+        </p>
+        <span className="text-mutted">{`${countOfMessages.length} messages`}</span>
+      </div>
+    );
   };
 
   return (
     <Col className="d-flex flex-column h-100 p-0">
-      <div className="bg-light mx-0 mb-4 p-3 shadow-sm small">
-        <p className="m-0">
-          <b>{}</b>
-        </p>
-        <span className="text-mutted">{`${0} messages`}</span>
+      {renderChannel()}
+      {renderMessages()}
+      <div className="mt-auto px-5 py-3">
+        <MessageForm />
       </div>
-      <div
-        className="chat-messages h-100 overflow-auto text-break px-5"
-        id="messages-box"
-      />
-      <MessageForm />
     </Col>
   );
 };

@@ -3,14 +3,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import loginJPG from '../../assets/images/login.jpg';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 
 const logInSchema = Yup.object().shape({
-  username: Yup.string().trim().min(5).max(10).required(),
+  username: Yup.string().trim().min(4).max(10).required(),
   password: Yup.string().trim().required(),
 });
 
@@ -19,7 +19,6 @@ const Login = () => {
 
   const auth = useAuth();
   const history = useHistory();
-  const location = useLocation();
 
   const textInput = useRef();
   useEffect(() => {
@@ -34,14 +33,14 @@ const Login = () => {
     logInSchema,
     onSubmit: async (value) => {
       const loginPath = routes.loginPath();
+      const chatPath = routes.mainPath();
 
       try {
         setAuthFailed(false);
         const { data } = await axios.post(loginPath, value);
         localStorage.setItem('userId', JSON.stringify(data));
         auth.logIn();
-        const { from } = location.state || { from: { pathname: '/' } };
-        history.replace(from);
+        history.replace({ pathname: chatPath });
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
@@ -104,10 +103,7 @@ const Login = () => {
                     The username or password is incorrect
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Button
-                  type="submit"
-                  className="w-100 mb-3 btn btn-primary"
-                >
+                <Button type="submit" className="w-100 mb-3 btn btn-primary">
                   Войти
                 </Button>
               </Form>
