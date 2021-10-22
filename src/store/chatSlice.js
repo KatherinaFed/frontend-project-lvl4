@@ -4,36 +4,37 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState: {
     channels: [],
-    currentChannelId: null,
     messages: [],
+    currentChannelId: null,
   },
   reducers: {
     setData(state, action) {
       const { channels, currentChannelId, messages } = action.payload;
       return {
         channels: [...channels],
-        currentChannelId,
         messages: [...messages],
+        currentChannelId,
       };
     },
     addChannel(state, action) {
-      const { channelData } = action.payload;
-      const { id } = channelData;
-      state.channels.push(channelData);
+      const { channel } = action.payload;
+      const { id } = channel;
+      state.channels.push(channel);
       state.currentChannelId = id;
     },
     setActiveChannel(state, action) {
-      const { id } = action.payload;
-      const { channels, messages } = state;
       return {
-        channels,
-        currentChannelId: id,
-        messages,
+        ...state,
+        currentChannelId: action.payload,
       };
     },
     addMessage(state, action) {
-      const { messageData } = action.payload;
-      state.messages.push(messageData);
+      const { channels, currentChannelId, messages } = state;
+      return {
+        channels,
+        currentChannelId,
+        messages: [...messages, action.payload],
+      };
     },
   },
 });
