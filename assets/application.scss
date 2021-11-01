@@ -1,1 +1,18 @@
 @import '~bootstrap/scss/bootstrap';
+
+body {
+  // background-color: #f5f5f5;
+  background-image: url('./images/backgroundLight.jpg');
+}
+
+/* Dark Mode styles */
+body.dark-theme {
+  color: #eee;
+  // background-color: #121212;
+  background-image: url('./images/backgroundDark.jpg');
+}
+
+body.dark-theme .modal-content {
+  color: #eee;
+  background-color: #2e2e2e;
+}

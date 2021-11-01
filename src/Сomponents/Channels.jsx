@@ -1,47 +1,100 @@
 import React from 'react';
-import { Button, ButtonGroup, Col } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { Button, ButtonGroup, Col, Dropdown, Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+
+import store from '../store/index.js';
 import { setActiveChannel } from '../store/chatSlice.js';
+import { useTheme, useModal } from '../hooks/index.js';
+import darkMode from './darkMode/themes.js';
+// import AddChannel from './modals/AddChannel.jsx';
+// import RemoveChannel from './modals/RemoveChannel.jsx';
+import { AddChannel, RemoveChannel, RenameChannel } from './modals/modals.js';
 
 const Channels = () => {
-  const dispatch = useDispatch();
+  const { handleShow, modalInfo } = useModal();
+  const { theme } = useTheme();
+  const { dark, light } = darkMode;
+  const themeButton = theme ? dark : light;
+
   const { channels, currentChannelId } = useSelector((state) => state.chat);
 
   const setActive = (id) => () => {
-    dispatch(setActiveChannel(id));
+    store.dispatch(setActiveChannel(id));
   };
 
   const renderChannels = () => {
-    const listOfChannels = (
-      <ButtonGroup vertical className="w-100 overflow-hidden">
-        {channels.map(({ id, name }) => {
-          const activeChannel = id === currentChannelId;
-          const buttonActive = activeChannel ? 'secondary' : 'light';
+    const listOfChannels = channels.map(({ id, name, removable }) => {
+      const activeChannel = id === currentChannelId;
+      const buttonStyle = activeChannel ? 'secondary' : themeButton;
 
-          return (
+      return !removable ? (
+        <Nav.Item key={id} as="li" className="w-100">
+          <Button
+            onClick={setActive(id)}
+            type="button"
+            className="w-100 rounded-0 text-start text-truncate my-1"
+            variant={buttonStyle}
+          >
+            <span># </span>
+            {name}
+          </Button>
+        </Nav.Item>
+      ) : (
+        <Nav.Item key={id} as="li" className="w-100">
+          <Dropdown className="d-flex" as={ButtonGroup}>
             <Button
-              key={id}
               onClick={setActive(id)}
               type="button"
-              className="rounded-0 text-start text-truncate my-1"
-              variant={buttonActive}
+              className="w-100 rounded-0 text-start text-truncate my-1"
+              variant={buttonStyle}
             >
               <span># </span>
               {name}
             </Button>
-          );
-        })}
-      </ButtonGroup>
-    );
+            <Dropdown.Toggle
+              aria-haspopup="true"
+              split
+              variant={buttonStyle}
+              className="flex-grow-0 my-1 rounded-end"
+            />
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => handleShow('removing', id)}>
+                Удалить
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleShow('renaming', id)}>
+                Переименовать
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav.Item>
+      );
+    });
 
     return channels ? listOfChannels : null;
+  };
+
+  const renderModal = (typeModal) => {
+    let modal = null;
+    if (typeModal.type === 'adding') {
+      modal = <AddChannel />;
+    } else if (typeModal.type === 'removing') {
+      modal = <RemoveChannel />;
+    } else if (typeModal.type === 'renaming') {
+      modal = <RenameChannel />;
+    }
+
+    return modal;
   };
 
   return (
     <Col className="col-4 col-md-2 border-end pt-5 px-0">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2 align-text-bottom">
         <span>Каналы</span>
-        <button type="button" className="p-0 text-primary btn btn-group-vertical">
+        <button
+          onClick={() => handleShow('adding', null)}
+          type="button"
+          className="p-0 text-primary btn btn-group-vertical"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -55,7 +108,12 @@ const Channels = () => {
           </svg>
         </button>
       </div>
-      {renderChannels()}
+      <div id="channel-list">
+        <Nav fill as="ul" variant="pills" className="flex-column px-2">
+          {renderChannels()}
+        </Nav>
+      </div>
+      {renderModal(modalInfo)}
     </Col>
   );
 };

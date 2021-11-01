@@ -3,27 +3,23 @@ import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSocket } from '../hooks/index.js';
-
-const inputSchema = Yup.object().shape({
-  message: Yup.string().trim().min(1).max(400).required(),
-});
+import { useSocket, useTheme } from '../hooks/index.js';
+import darkMode from './darkMode/themes.js';
 
 const MessageForm = () => {
   const { currentChannelId } = useSelector((state) => state.chat);
   const { username } = JSON.parse(localStorage.getItem('userId'));
   const socket = useSocket();
 
-  const textInput = useRef();
+  const textInput = useRef(null);
   useEffect(() => {
     textInput.current.focus();
-  }, []);
+  });
 
   const { handleChange, handleSubmit, isSubmitting, values } = useFormik({
     initialValues: {
       message: '',
     },
-    inputSchema,
     onSubmit: ({ message }, { resetForm, setSubmitting }) => {
       setSubmitting(false);
 
@@ -72,7 +68,7 @@ const MessageForm = () => {
 };
 
 const Messages = () => {
-  const { channels, currentChannelId, messages } = useSelector((state) => state.chat);
+  const { channels, messages, currentChannelId } = useSelector((state) => state.chat);
 
   const buildMessage = ({ message, id, username }) => (
     <div key={id} className="text-break mb-2">
@@ -98,12 +94,15 @@ const Messages = () => {
   };
 
   const renderChannel = () => {
-    const currentChannel = channels.find(({ id }) => id === currentChannelId);
+    const { theme } = useTheme();
+    const { dark, white } = darkMode;
+    const statusMode = theme ? dark : white;
 
+    const currentChannel = channels.find(({ id }) => id === currentChannelId);
     const countOfMessages = messages.filter(({ channelId }) => channelId === currentChannelId);
 
     return (
-      <div className="bg-light mx-0 mb-4 p-3 shadow-sm small">
+      <div className={`bg-${statusMode} mx-0 mb-4 p-3 shadow-sm small`}>
         <p className="m-0">
           <b>{currentChannel ? currentChannel.name : null}</b>
         </p>

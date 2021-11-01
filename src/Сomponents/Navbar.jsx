@@ -1,9 +1,17 @@
 import { Button, Navbar, Container } from 'react-bootstrap';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks/index.js';
+
+import { useAuth, useTheme } from '../hooks/index.js';
+import SwitchButton from './darkMode/buttonMode.jsx';
+import darkMode from './darkMode/themes.js';
 
 const Nav = () => {
+  const { theme } = useTheme();
+  const { dark, white } = darkMode;
+  const themeNavbar = theme ? dark : white;
+  const themeText = theme ? white : dark;
+
   const AuthButton = () => {
     const { loggedIn, logOut } = useAuth();
 
@@ -15,12 +23,15 @@ const Nav = () => {
   };
 
   return (
-    <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+    <Navbar className={`shadow-sm navbar navbar-expand-lg navbar-light bg-${themeNavbar}`}>
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand className={`text-${themeText}`} as={Link} to="/">
           Hexlet Chat
         </Navbar.Brand>
-        <AuthButton />
+        <div className="navbar-nav">
+          <AuthButton />
+          <SwitchButton />
+        </div>
       </Container>
     </Navbar>
   );

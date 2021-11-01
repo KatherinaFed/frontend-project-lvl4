@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const defaultChannel = 1;
+
 const chatSlice = createSlice({
   name: 'chat',
   initialState: {
@@ -9,7 +11,7 @@ const chatSlice = createSlice({
   },
   reducers: {
     setData(state, action) {
-      const { channels, currentChannelId, messages } = action.payload;
+      const { channels, messages, currentChannelId } = action.payload;
       return {
         channels: [...channels],
         messages: [...messages],
@@ -17,23 +19,45 @@ const chatSlice = createSlice({
       };
     },
     addChannel(state, action) {
-      const { channel } = action.payload;
-      const { id } = channel;
-      state.channels.push(channel);
-      state.currentChannelId = id;
+      const { channels, messages, currentChannelId } = state;
+
+      return {
+        channels: [...channels, action.payload],
+        messages,
+        currentChannelId,
+      };
     },
     setActiveChannel(state, action) {
+      const { channels, messages } = state;
       return {
-        ...state,
+        channels,
+        messages,
         currentChannelId: action.payload,
       };
     },
     addMessage(state, action) {
-      const { channels, currentChannelId, messages } = state;
+      const { channels, messages, currentChannelId } = state;
       return {
         channels,
-        currentChannelId,
         messages: [...messages, action.payload],
+        currentChannelId,
+      };
+    },
+    renameChannel(state, action) {
+      const { id, name } = action.payload;
+      const channel = state.channels.find((item) => item.id === id);
+      channel.name = name;
+    },
+    removeChannel(state, action) {
+      const { id } = action.payload;
+      const { channels, messages, currentChannelId } = state;
+
+      const newChannel = currentChannelId === id ? defaultChannel : currentChannelId;
+
+      return {
+        channels: channels.filter((item) => item.id !== id),
+        messages: messages.filter((item) => item.channelId !== id),
+        currentChannelId: newChannel,
       };
     },
   },
@@ -44,6 +68,8 @@ export const {
   addChannel,
   setActiveChannel,
   addMessage,
+  renameChannel,
+  removeChannel,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;
