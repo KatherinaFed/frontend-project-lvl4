@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import loginJPG from '../../assets/images/login.jpg';
 import { useAuth, useTheme } from '../hooks/index.js';
@@ -116,6 +116,12 @@ const Login = () => {
                 </Button>
               </Form>
             </Card.Body>
+            <Card.Footer className="p-4">
+              <div className="text-center">
+                <span>Нет аккаунта? </span>
+                <Link to="/signup">Регистрация</Link>
+              </div>
+            </Card.Footer>
           </Card>
         </div>
       </div>

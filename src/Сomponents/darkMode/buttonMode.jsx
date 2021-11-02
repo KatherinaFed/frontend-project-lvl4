@@ -10,7 +10,7 @@ const SwitchButton = () => {
 
   return (
     <Button
-      className={`btn-${theme ? dark : light} btn-outline-primary`}
+      className={`btn-${theme ? dark : light} ms-2 btn-outline-primary`}
       onClick={switchTheme}
     >
       <span>{theme ? darkButton : lightButton}</span>

@@ -10,6 +10,7 @@ import NotFound from './NotFound.jsx';
 import Login from './Login.jsx';
 import Navbar from './Navbar.jsx';
 import Chat from './Chat.jsx';
+import Signup from './Signup.jsx';
 
 import {
   AuthProvider,
@@ -45,6 +46,9 @@ const App = () => (
               </ChatRoute>
               <Route path="/login">
                 <Login />
+              </Route>
+              <Route path="/signup">
+                <Signup />
               </Route>
               <Route path="*">
                 <NotFound />
