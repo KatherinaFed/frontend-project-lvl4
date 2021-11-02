@@ -6,8 +6,6 @@ import store from '../store/index.js';
 import { setActiveChannel } from '../store/chatSlice.js';
 import { useTheme, useModal } from '../hooks/index.js';
 import darkMode from './darkMode/themes.js';
-// import AddChannel from './modals/AddChannel.jsx';
-// import RemoveChannel from './modals/RemoveChannel.jsx';
 import { AddChannel, RemoveChannel, RenameChannel } from './modals/modals.js';
 
 const Channels = () => {

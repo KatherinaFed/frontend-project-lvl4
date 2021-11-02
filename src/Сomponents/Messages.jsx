@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useSocket, useTheme } from '../hooks/index.js';
 import darkMode from './darkMode/themes.js';
 
