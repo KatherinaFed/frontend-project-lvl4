@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, ButtonGroup, Col, Dropdown, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import store from '../store/index.js';
 import { setActiveChannel } from '../store/chatSlice.js';
@@ -9,6 +10,7 @@ import darkMode from './darkMode/themes.js';
 import { AddChannel, RemoveChannel, RenameChannel } from './modals/modals.js';
 
 const Channels = () => {
+  const { t } = useTranslation();
   const { handleShow, modalInfo } = useModal();
   const { theme } = useTheme();
   const { dark, light } = darkMode;
@@ -57,10 +59,10 @@ const Channels = () => {
             />
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => handleShow('removing', id)}>
-                Удалить
+                {t('channels.remove')}
               </Dropdown.Item>
               <Dropdown.Item onClick={() => handleShow('renaming', id)}>
-                Переименовать
+                {t('channels.rename')}
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -87,7 +89,7 @@ const Channels = () => {
   return (
     <Col className="col-4 col-md-2 border-end pt-5 px-0">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2 align-text-bottom">
-        <span>Каналы</span>
+        <span>{t('channels.name')}</span>
         <button
           onClick={() => handleShow('adding', null)}
           type="button"

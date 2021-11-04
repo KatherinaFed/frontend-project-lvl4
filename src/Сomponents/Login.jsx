@@ -4,6 +4,7 @@ import { Button, Card, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useHistory, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import loginJPG from '../../assets/images/login.jpg';
 import { useAuth, useTheme } from '../hooks/index.js';
@@ -20,6 +21,7 @@ const Login = () => {
 
   const auth = useAuth();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const { theme } = useTheme();
   const { dark, white } = darkMode;
@@ -49,11 +51,11 @@ const Login = () => {
         history.replace({ pathname: chatPath });
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
-          setAuthFailed('Неверные имя пользователя или пароль');
+          setAuthFailed(t('errors.userNoExist'));
           textInput.current.select();
           return;
         }
-        throw err;
+        setAuthFailed(t('errors.defaultError'));
       }
     },
   });
@@ -76,7 +78,7 @@ const Login = () => {
                 className="col-12 col-md-6 mt-3 mt-mb-0"
                 onSubmit={handleSubmit}
               >
-                <h1 className={`text-${themeText} text-center mb-4`}>Войти</h1>
+                <h1 className={`text-${themeText} text-center mb-4`}>{t('loginForm.login')}</h1>
                 <Form.Group className="form-floating mb-3">
                   <Form.Control
                     onChange={handleChange}
@@ -88,9 +90,9 @@ const Login = () => {
                     className={themeFormControl}
                     autoComplete="username"
                     required
-                    placeholder="Ваш ник"
+                    placeholder={t('loginForm.placeholderName')}
                   />
-                  <Form.Label htmlFor="username">Ваш ник</Form.Label>
+                  <Form.Label htmlFor="username">{t('loginForm.loginName')}</Form.Label>
                 </Form.Group>
 
                 <Form.Group className="form-floating mb-4">
@@ -103,23 +105,23 @@ const Login = () => {
                     className={themeFormControl}
                     autoComplete="current-password"
                     required
-                    placeholder="Пароль"
+                    placeholder={t('loginForm.placeholderPassword')}
                     type="password"
                   />
-                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                  <Form.Label htmlFor="password">{t('loginForm.loginPassword')}</Form.Label>
                   <Form.Control.Feedback type="invalid">
                     {(errors.username && errors.password) || authFailed}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Button type="submit" className="w-100 mb-3 btn btn-primary">
-                  Войти
+                  {t('loginForm.login')}
                 </Button>
               </Form>
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта? </span>
-                <Link to="/signup">Регистрация</Link>
+                <span>{t('loginForm.notHaveAccount')}</span>
+                <Link to="/signup">{t('loginForm.linkSignup')}</Link>
               </div>
             </Card.Footer>
           </Card>
