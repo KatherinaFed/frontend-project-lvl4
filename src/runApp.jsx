@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import i18n from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
+import { Provider as RollBarProvider } from '@rollbar/react';
+import { rollbarConfig, rollbarInstance } from './rollbar.js';
 
 import App from './Сomponents/App.jsx';
 import store from './store/index.js';
-import { SocketProvider } from './contexts/index.js';
 import resources from './locales/index.js';
 
 const render = async () => {
@@ -22,24 +22,13 @@ const render = async () => {
 
   return (
     <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <SocketProvider>
+      <RollBarProvider config={rollbarConfig} instance={rollbarInstance}>
+        <I18nextProvider i18n={i18n}>
           <App />
-        </SocketProvider>
-      </I18nextProvider>
+        </I18nextProvider>
+      </RollBarProvider>
     </Provider>
   );
 };
-
-// const render = () => {
-//   ReactDOM.render(
-//     <Provider store={store}>
-//       <SocketProvider>
-//         <App />
-//       </SocketProvider>
-//     </Provider>,
-//     document.getElementById('chat'),
-//   );
-// };
 
 export default render;
