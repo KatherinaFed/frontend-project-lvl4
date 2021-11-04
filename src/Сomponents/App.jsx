@@ -15,6 +15,7 @@ import Signup from './Signup.jsx';
 import {
   AuthProvider,
   ModalProvider,
+  SocketProvider,
   ThemeProvider,
 } from '../contexts/index.js';
 
@@ -34,31 +35,33 @@ const ChatRoute = ({ children, path }) => {
 };
 
 const App = () => (
-  <AuthProvider>
-    <ThemeProvider>
-      <ModalProvider>
-        <Router>
-          <div className="d-flex flex-column h-100">
-            <Navbar />
-            <Switch>
-              <ChatRoute exact path="/">
-                <Chat />
-              </ChatRoute>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/signup">
-                <Signup />
-              </Route>
-              <Route path="*">
-                <NotFound />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      </ModalProvider>
-    </ThemeProvider>
-  </AuthProvider>
+  <SocketProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <ModalProvider>
+          <Router>
+            <div className="d-flex flex-column h-100">
+              <Navbar />
+              <Switch>
+                <ChatRoute exact path="/">
+                  <Chat />
+                </ChatRoute>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/signup">
+                  <Signup />
+                </Route>
+                <Route path="*">
+                  <NotFound />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </ModalProvider>
+      </ThemeProvider>
+    </AuthProvider>
+  </SocketProvider>
 );
 
 export default App;
