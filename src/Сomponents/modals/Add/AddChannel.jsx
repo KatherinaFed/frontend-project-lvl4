@@ -1,16 +1,18 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import ModalForm from './AddModalForm.jsx';
 import { useModal } from '../../../hooks/index.js';
 
 const AddChannel = () => {
+  const { t } = useTranslation();
   const { show, handleClose } = useModal();
 
   return (
     <Modal show={show} centered onHide={handleClose}>
       <Modal.Header>
-        <Modal.Title className="h4">Добавить канал</Modal.Title>
+        <Modal.Title className="h4">{t('modals.addChannel')}</Modal.Title>
         <Button
           onClick={handleClose}
           aria-label="Close"

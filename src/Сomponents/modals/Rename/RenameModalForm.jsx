@@ -3,10 +3,12 @@ import { Button, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { useModal, useSocket } from '../../../hooks/index.js';
 
 const ModalForm = () => {
+  const { t } = useTranslation();
   const socket = useSocket();
   const { handleClose, modalInfo } = useModal();
   const { channels } = useSelector((state) => state.chat);
@@ -17,9 +19,9 @@ const ModalForm = () => {
   const channelSchema = Yup.object().shape({
     name: Yup.string()
       .trim()
-      .min(3, 'Длина названия должна быть не менее 3-х символов')
-      .max(20, 'Длина названия должна быть не более 20-ти символов')
-      .notOneOf(channelName, 'Название должно быть уникально')
+      .min(3, 'errors.nameLength')
+      .max(20, 'errors.nameLength')
+      .notOneOf(channelName, 'errors.uniqueChannelName')
       .required(),
   });
 
@@ -57,17 +59,17 @@ const ModalForm = () => {
           isInvalid={errors.name}
           value={values.name}
         />
-        <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">{t(errors.name)}</Form.Control.Feedback>
         <div className="d-flex justify-content-end">
           <Button
             onClick={handleClose}
             type="button"
             className="me-2 btn btn-secondary"
           >
-            Отменить
+            {t('modals.send')}
           </Button>
           <Button type="submit" className="btn btn-primary">
-            Отправить
+            {t('modals.cancel')}
           </Button>
         </div>
       </Form.Group>
