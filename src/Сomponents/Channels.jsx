@@ -30,6 +30,7 @@ const Channels = () => {
       return !removable ? (
         <Nav.Item key={id} as="li" className="w-100">
           <Button
+            role="button"
             onClick={setActive(id)}
             type="button"
             className="w-100 rounded-0 text-start text-truncate my-1"
@@ -43,6 +44,7 @@ const Channels = () => {
         <Nav.Item key={id} as="li" className="w-100">
           <Dropdown className="d-flex" as={ButtonGroup}>
             <Button
+              role="button"
               onClick={setActive(id)}
               type="button"
               className="w-100 rounded-0 text-start text-truncate my-1"

@@ -57,6 +57,7 @@ const MessageForm = () => {
         </Col>
         <Col xs="auto">
           <Button
+            role="button"
             className="btn btn-group-vertical"
             type="submit"
             disabled={values.message === '' || isSubmitting}
