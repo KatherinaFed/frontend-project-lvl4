@@ -30,7 +30,13 @@ const ModalForm = () => {
     textInput.current.select();
   }, []);
 
-  const { handleChange, handleSubmit, isSubmitting, values, errors } = useFormik({
+  const {
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    values,
+    errors,
+  } = useFormik({
     initialValues: {
       name,
     },
@@ -59,17 +65,24 @@ const ModalForm = () => {
           isInvalid={errors.name}
           value={values.name}
         />
-        <Form.Control.Feedback type="invalid">{t(errors.name)}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          {t(errors.name)}
+        </Form.Control.Feedback>
         <div className="d-flex justify-content-end">
           <Button
             onClick={handleClose}
             type="button"
+            name={t('modals.cancel')}
             className="me-2 btn btn-secondary"
           >
-            {t('modals.send')}
-          </Button>
-          <Button type="submit" className="btn btn-primary">
             {t('modals.cancel')}
+          </Button>
+          <Button
+            type="submit"
+            name={t('modals.send')}
+            className="btn btn-primary"
+          >
+            {t('modals.send')}
           </Button>
         </div>
       </Form.Group>

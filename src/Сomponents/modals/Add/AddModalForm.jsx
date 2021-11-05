@@ -67,12 +67,13 @@ const ModalForm = () => {
           <Button
             onClick={handleClose}
             type="button"
+            name={t('modals.cancel')}
             className="me-2 btn btn-secondary"
           >
-            {t('modals.send')}
-          </Button>
-          <Button type="submit" className="btn btn-primary">
             {t('modals.cancel')}
+          </Button>
+          <Button type="submit" name={t('modals.send')} className="btn btn-primary">
+            {t('modals.send')}
           </Button>
         </div>
       </Form.Group>
