@@ -23,8 +23,6 @@ const MessageForm = () => {
       message: '',
     },
     onSubmit: ({ message }, { resetForm, setSubmitting }) => {
-      setSubmitting(false);
-
       const newMessage = {
         message,
         channelId: currentChannelId,
@@ -35,6 +33,7 @@ const MessageForm = () => {
         if (status === 'ok') {
           setSubmitting(true);
           resetForm();
+          setSubmitting(false);
         }
       });
     },
