@@ -95,6 +95,7 @@ const Channels = () => {
         <button
           onClick={() => handleShow('adding', null)}
           type="button"
+          name="+"
           className="p-0 text-primary btn btn-group-vertical"
         >
           <svg
