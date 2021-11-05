@@ -20,8 +20,9 @@ const ModalProvider = ({ children }) => {
       show,
       modalInfo,
       handleShow,
-      handleClose
-    }}>
+      handleClose,
+    }}
+    >
       {children}
     </ModalContext.Provider>
   );

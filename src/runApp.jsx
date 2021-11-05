@@ -13,7 +13,7 @@ import {
   addMessage,
   addChannel,
   removeChannel,
-  renameChannel
+  renameChannel,
 } from './store/chatSlice.js';
 
 const render = async (socket) => {

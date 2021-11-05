@@ -4,7 +4,7 @@ import {
   ButtonGroup,
   Col,
   Dropdown,
-  Nav
+  Nav,
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -82,16 +82,17 @@ const Channels = () => {
   };
 
   const renderModal = (typeModal) => {
-    let modal = null;
     if (typeModal.type === 'adding') {
-      modal = <AddChannel />;
-    } else if (typeModal.type === 'removing') {
-      modal = <RemoveChannel />;
-    } else if (typeModal.type === 'renaming') {
-      modal = <RenameChannel />;
+      return <AddChannel />;
+    }
+    if (typeModal.type === 'removing') {
+      return <RemoveChannel />;
+    }
+    if (typeModal.type === 'renaming') {
+      return <RenameChannel />;
     }
 
-    return modal;
+    return null;
   };
 
   return (

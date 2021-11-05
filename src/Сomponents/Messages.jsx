@@ -4,7 +4,7 @@ import {
   Col,
   Form,
   FormControl,
-  Row
+  Row,
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -28,7 +28,7 @@ const MessageForm = () => {
     handleChange,
     handleSubmit,
     isSubmitting,
-    values
+    values,
   } = useFormik({
     initialValues: {
       message: '',

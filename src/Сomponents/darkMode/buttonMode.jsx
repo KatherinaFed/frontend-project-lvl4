@@ -10,7 +10,7 @@ const SwitchButton = () => {
     dark,
     light,
     darkButton,
-    lightButton
+    lightButton,
   } = darkMode;
 
   return (

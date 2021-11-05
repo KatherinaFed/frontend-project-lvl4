@@ -14,5 +14,5 @@ export {
   useAuth,
   useModal,
   useSocket,
-  useTheme
+  useTheme,
 };

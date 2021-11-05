@@ -34,7 +34,7 @@ const ModalForm = () => {
     handleChange,
     handleSubmit,
     isSubmitting,
-    errors
+    errors,
   } = useFormik({
     initialValues: {
       name: '',
