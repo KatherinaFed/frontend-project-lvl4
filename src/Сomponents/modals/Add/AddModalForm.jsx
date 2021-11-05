@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -30,7 +30,12 @@ const ModalForm = () => {
     textInput.current.focus();
   }, []);
 
-  const { handleChange, handleSubmit, isSubmitting, errors } = useFormik({
+  const {
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    errors
+  } = useFormik({
     initialValues: {
       name: '',
     },

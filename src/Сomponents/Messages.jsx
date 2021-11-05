@@ -1,5 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  Form,
+  FormControl,
+  Row
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +24,12 @@ const MessageForm = () => {
     textInput.current.focus();
   });
 
-  const { handleChange, handleSubmit, isSubmitting, values } = useFormik({
+  const {
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    values
+  } = useFormik({
     initialValues: {
       message: '',
     },

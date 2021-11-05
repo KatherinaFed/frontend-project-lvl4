@@ -6,7 +6,12 @@ import darkMode from './themes.js';
 
 const SwitchButton = () => {
   const { theme, switchTheme } = useTheme();
-  const { dark, light, darkButton, lightButton } = darkMode;
+  const {
+    dark,
+    light,
+    darkButton,
+    lightButton
+  } = darkMode;
 
   return (
     <Button

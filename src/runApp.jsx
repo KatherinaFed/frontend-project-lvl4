@@ -8,9 +8,13 @@ import { rollbarConfig, rollbarInstance } from './rollbar.js';
 import App from './Сomponents/App.jsx';
 import store from './store/index.js';
 import resources from './locales/index.js';
-// import { SocketProvider } from './contexts/index.js';
 import SocketContext from './contexts/socket/SocketContext.js';
-import { addMessage, addChannel, removeChannel, renameChannel } from './store/chatSlice.js';
+import {
+  addMessage,
+  addChannel,
+  removeChannel,
+  renameChannel
+} from './store/chatSlice.js';
 
 const render = async (socket) => {
   await i18n.use(initReactI18next).init({

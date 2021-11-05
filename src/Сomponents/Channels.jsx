@@ -1,5 +1,11 @@
 import React from 'react';
-import { Button, ButtonGroup, Col, Dropdown, Nav } from 'react-bootstrap';
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Dropdown,
+  Nav
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
