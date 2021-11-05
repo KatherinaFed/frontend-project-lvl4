@@ -14,7 +14,6 @@ const render = async () => {
   await i18n.use(initReactI18next).init({
     resources,
     lng: 'ru',
-    debug: true,
 
     interpolation: {
       escapeValue: false,

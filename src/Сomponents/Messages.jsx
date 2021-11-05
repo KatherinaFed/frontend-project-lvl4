@@ -60,6 +60,7 @@ const MessageForm = () => {
             role="button"
             className="btn btn-group-vertical"
             type="submit"
+            name={t('messages.send')}
             disabled={values.message === '' || isSubmitting}
           >
             {t('messages.send')}
