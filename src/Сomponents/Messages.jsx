@@ -108,7 +108,7 @@ const Messages = () => {
   };
 
   const renderChannel = () => {
-    const { theme } = useTheme();
+    const { theme } = UseTheme();
     const { dark, white } = darkMode;
     const statusMode = theme ? dark : white;
 
