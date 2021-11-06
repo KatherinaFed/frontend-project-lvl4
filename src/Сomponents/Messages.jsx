@@ -107,8 +107,8 @@ const Messages = () => {
     );
   };
 
-  const renderChannel = () => {
-    const { theme } = UseTheme();
+  const RenderChannel = () => {
+    const { theme } = useTheme();
     const { dark, white } = darkMode;
     const statusMode = theme ? dark : white;
 
@@ -127,7 +127,7 @@ const Messages = () => {
 
   return (
     <Col className="d-flex flex-column h-100 p-0">
-      {renderChannel()}
+      {RenderChannel()}
       {renderMessages()}
       <div className="mt-auto px-5 py-3">
         <MessageForm />
