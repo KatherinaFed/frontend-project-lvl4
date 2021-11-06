@@ -1,5 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  Form,
+  FormControl,
+  Row,
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -18,13 +24,16 @@ const MessageForm = () => {
     textInput.current.focus();
   });
 
-  const { handleChange, handleSubmit, isSubmitting, values } = useFormik({
+  const {
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    values,
+  } = useFormik({
     initialValues: {
       message: '',
     },
     onSubmit: ({ message }, { resetForm, setSubmitting }) => {
-      setSubmitting(false);
-
       const newMessage = {
         message,
         channelId: currentChannelId,
@@ -35,6 +44,7 @@ const MessageForm = () => {
         if (status === 'ok') {
           setSubmitting(true);
           resetForm();
+          setSubmitting(false);
         }
       });
     },
@@ -57,8 +67,10 @@ const MessageForm = () => {
         </Col>
         <Col xs="auto">
           <Button
+            role="button"
             className="btn btn-group-vertical"
             type="submit"
+            name={t('messages.send')}
             disabled={values.message === '' || isSubmitting}
           >
             {t('messages.send')}
@@ -95,7 +107,7 @@ const Messages = () => {
     );
   };
 
-  const renderChannel = () => {
+  const RenderChannel = () => {
     const { theme } = useTheme();
     const { dark, white } = darkMode;
     const statusMode = theme ? dark : white;
@@ -115,7 +127,7 @@ const Messages = () => {
 
   return (
     <Col className="d-flex flex-column h-100 p-0">
-      {renderChannel()}
+      {RenderChannel()}
       {renderMessages()}
       <div className="mt-auto px-5 py-3">
         <MessageForm />

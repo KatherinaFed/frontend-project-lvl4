@@ -10,4 +10,9 @@ const useModal = () => useContext(ModalContext);
 const useSocket = () => useContext(SocketContext);
 const useTheme = () => useContext(ThemeContext);
 
-export { useAuth, useModal, useSocket, useTheme };
+export {
+  useAuth,
+  useModal,
+  useSocket,
+  useTheme,
+};

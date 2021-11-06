@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -30,7 +30,12 @@ const ModalForm = () => {
     textInput.current.focus();
   }, []);
 
-  const { handleChange, handleSubmit, isSubmitting, errors } = useFormik({
+  const {
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    errors,
+  } = useFormik({
     initialValues: {
       name: '',
     },
@@ -67,12 +72,13 @@ const ModalForm = () => {
           <Button
             onClick={handleClose}
             type="button"
+            name={t('modals.cancel')}
             className="me-2 btn btn-secondary"
           >
-            {t('modals.send')}
-          </Button>
-          <Button type="submit" className="btn btn-primary">
             {t('modals.cancel')}
+          </Button>
+          <Button type="submit" name={t('modals.send')} className="btn btn-primary">
+            {t('modals.send')}
           </Button>
         </div>
       </Form.Group>

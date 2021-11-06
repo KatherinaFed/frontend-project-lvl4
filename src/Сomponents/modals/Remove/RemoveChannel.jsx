@@ -32,8 +32,22 @@ const RemoveChannel = () => {
       <Modal.Body>
         <p className="lead">{t('modals.sure')}</p>
         <div className="d-flex justify-content-end">
-          <Button onClick={handleClose} className="me-2 btn btn-secondary">{t('modals.send')}</Button>
-          <Button onClick={handleSubmit} className="btn btn-danger">{t('modals.remove')}</Button>
+          <Button
+            onClick={handleClose}
+            role="button"
+            name={t('modals.cancel')}
+            className="me-2 btn btn-secondary"
+          >
+            {t('modals.cancel')}
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            role="button"
+            name={t('modals.remove')}
+            className="btn btn-danger"
+          >
+            {t('modals.remove')}
+          </Button>
         </div>
       </Modal.Body>
     </Modal>
