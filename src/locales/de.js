@@ -1,7 +1,7 @@
 export default {
   translation: {
     language: 'German',
-    projectName: 'Slack Chat (light version)',
+    projectName: 'Hexlet Chat',
     loginForm: {
       loginName: 'Username',
       placeholderName: 'Username',
