@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { useModal, useSocket } from '../../../contexts/hooks/index.js';
+import { useModal, useSocket } from '../../../hooks/index.js';
 
 const ModalForm = () => {
   const { t } = useTranslation();

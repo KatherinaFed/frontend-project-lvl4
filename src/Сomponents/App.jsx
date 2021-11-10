@@ -18,7 +18,7 @@ import {
   ThemeProvider,
 } from '../contexts/index.js';
 
-import { useAuth } from '../contexts/hooks/index.js';
+import { useAuth } from '../hooks/index.js';
 
 const ChatRoute = ({ children, path }) => {
   const { loggedIn } = useAuth();

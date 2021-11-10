@@ -50,11 +50,9 @@ const render = async (socket) => {
     <Provider store={store}>
       <RollBarProvider config={rollbarConfig} instance={rollbarInstance}>
         <I18nextProvider i18n={i18n}>
-          {/* <SocketProvider> */}
           <SocketContext.Provider value={socketValues}>
             <App />
           </SocketContext.Provider>
-          {/* </SocketProvider> */}
         </I18nextProvider>
       </RollBarProvider>
     </Provider>

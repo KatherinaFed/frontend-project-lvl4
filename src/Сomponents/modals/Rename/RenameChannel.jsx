@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import ModalForm from './RenameModalForm.jsx';
-import { useModal } from '../../../contexts/hooks/index.js';
+import { useModal } from '../../../hooks/index.js';
 
 const RenameChannel = () => {
   const { t } = useTranslation();

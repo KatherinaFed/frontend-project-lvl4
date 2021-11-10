@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import AuthContext from '../auth/AuthContext.js';
-import ModalContext from '../modal/ModalContext.js';
-import SocketContext from '../socket/SocketContext.js';
-import ThemeContext from '../theme/ThemeContext.js';
+import AuthContext from '../contexts/auth/AuthContext.js';
+import ModalContext from '../contexts/modal/ModalContext.js';
+import SocketContext from '../contexts/socket/SocketContext.js';
+import ThemeContext from '../contexts/theme/ThemeContext.js';
 
 const useAuth = () => useContext(AuthContext);
 const useModal = () => useContext(ModalContext);

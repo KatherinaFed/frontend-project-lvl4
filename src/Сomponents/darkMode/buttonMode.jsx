@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-import { useTheme } from '../../contexts/hooks/index.js';
+import { useTheme } from '../../hooks/index.js';
 import darkMode from './themes.js';
 
 const SwitchButton = () => {

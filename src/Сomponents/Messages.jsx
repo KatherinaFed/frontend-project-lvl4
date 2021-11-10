@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import { useSocket, useTheme } from '../contexts/hooks/index.js';
+import { useSocket, useTheme } from '../hooks/index.js';
 import darkMode from './darkMode/themes.js';
 
 const MessageForm = () => {

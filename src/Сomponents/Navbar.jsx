@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth, useTheme } from '../contexts/hooks/index.js';
+import { useAuth, useTheme } from '../hooks/index.js';
 import SwitchButton from './darkMode/buttonMode.jsx';
 import darkMode from './darkMode/themes.js';
 

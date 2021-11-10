@@ -7,7 +7,7 @@ import Messages from './Messages.jsx';
 import store from '../store/index.js';
 import { setData } from '../store/chatSlice.js';
 import routes from '../routes.js';
-import { useTheme } from '../contexts/hooks/index.js';
+import { useTheme } from '../hooks/index.js';
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));

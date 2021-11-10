@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import ModalForm from './AddModalForm.jsx';
-import { useModal } from '../../../contexts/hooks/index.js';
+import { useModal } from '../../../hooks/index.js';
 
 const AddChannel = () => {
   const { t } = useTranslation();

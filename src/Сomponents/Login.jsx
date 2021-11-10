@@ -5,10 +5,10 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { GoogleLogin } from 'react-google-login';
+import GoogleLogin from 'react-google-login';
 
 import loginJPG from '../../assets/images/login.jpg';
-import { useAuth, useTheme } from '../contexts/hooks/index.js';
+import { useAuth, useTheme } from '../hooks/index.js';
 import routes from '../routes.js';
 import darkMode from './darkMode/themes.js';
 
@@ -43,7 +43,12 @@ const Login = () => {
     textInput.current.focus();
   }, []);
 
-  const { handleSubmit, handleChange, values, errors } = useFormik({
+  const {
+    handleSubmit,
+    handleChange,
+    values,
+    errors,
+  } = useFormik({
     initialValues: {
       username: '',
       password: '',
@@ -147,7 +152,7 @@ const Login = () => {
                   buttonText="Log in with Google"
                   onSuccess={signInSuccess}
                   onFailure={signInFailure}
-                  cookiePolicy={'single_host_origin'}
+                  cookiePolicy="single_host_origin"
                 />
               </div>
             </Card.Footer>

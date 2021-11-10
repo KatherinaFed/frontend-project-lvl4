@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import signupJPG from '../../assets/images/signup.jpg';
-import { useAuth, useTheme } from '../contexts/hooks/index.js';
+import { useAuth, useTheme } from '../hooks/index.js';
 import routes from '../routes.js';
 import darkMode from './darkMode/themes.js';
 
