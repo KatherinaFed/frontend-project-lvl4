@@ -5,9 +5,10 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { GoogleLogin } from 'react-google-login';
 
 import loginJPG from '../../assets/images/login.jpg';
-import { useAuth, useTheme } from '../hooks/index.js';
+import { useAuth, useTheme } from '../contexts/hooks/index.js';
 import routes from '../routes.js';
 import darkMode from './darkMode/themes.js';
 
@@ -18,6 +19,14 @@ const logInSchema = Yup.object().shape({
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
+
+  const signInSuccess = (response) => {
+    console.log(response.profileObj);
+  };
+
+  const signInFailure = (response) => {
+    console.log(response.profileObj);
+  };
 
   const auth = useAuth();
   const history = useHistory();
@@ -34,12 +43,7 @@ const Login = () => {
     textInput.current.focus();
   }, []);
 
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    errors,
-  } = useFormik({
+  const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues: {
       username: '',
       password: '',
@@ -83,7 +87,9 @@ const Login = () => {
                 className="col-12 col-md-6 mt-3 mt-mb-0"
                 onSubmit={handleSubmit}
               >
-                <h1 className={`text-${themeText} text-center mb-4`}>{t('loginForm.login')}</h1>
+                <h1 className={`text-${themeText} text-center mb-4`}>
+                  {t('loginForm.login')}
+                </h1>
                 <Form.Group className="form-floating mb-3">
                   <Form.Control
                     onChange={handleChange}
@@ -97,7 +103,9 @@ const Login = () => {
                     required
                     placeholder={t('loginForm.placeholderName')}
                   />
-                  <Form.Label htmlFor="username">{t('loginForm.loginName')}</Form.Label>
+                  <Form.Label htmlFor="username">
+                    {t('loginForm.loginName')}
+                  </Form.Label>
                 </Form.Group>
 
                 <Form.Group className="form-floating mb-4">
@@ -113,7 +121,9 @@ const Login = () => {
                     placeholder={t('loginForm.placeholderPassword')}
                     type="password"
                   />
-                  <Form.Label htmlFor="password">{t('loginForm.loginPassword')}</Form.Label>
+                  <Form.Label htmlFor="password">
+                    {t('loginForm.loginPassword')}
+                  </Form.Label>
                   <Form.Control.Feedback type="invalid">
                     {(errors.username && errors.password) || authFailed}
                   </Form.Control.Feedback>
@@ -127,6 +137,18 @@ const Login = () => {
               <div className="text-center">
                 <span>{t('loginForm.notHaveAccount')}</span>
                 <Link to="/signup">{t('loginForm.linkSignup')}</Link>
+              </div>
+              <div>
+                <p>или</p>
+              </div>
+              <div className="text-center">
+                <GoogleLogin
+                  clientId="699322443366-cadj5u8p5ar2f52acd74j48n1v3nsgnt.apps.googleusercontent.com"
+                  buttonText="Log in with Google"
+                  onSuccess={signInSuccess}
+                  onFailure={signInFailure}
+                  cookiePolicy={'single_host_origin'}
+                />
               </div>
             </Card.Footer>
           </Card>

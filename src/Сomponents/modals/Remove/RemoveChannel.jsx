@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import { useModal, useSocket } from '../../../hooks/index.js';
+import { useModal, useSocket } from '../../../contexts/hooks/index.js';
 
 const RemoveChannel = () => {
   const { t } = useTranslation();

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import store from '../../../store/index.js';
 import { setActiveChannel } from '../../../store/chatSlice.js';
-import { useModal, useSocket } from '../../../hooks/index.js';
+import { useModal, useSocket } from '../../../contexts/hooks/index.js';
 
 const ModalForm = () => {
   const { t } = useTranslation();

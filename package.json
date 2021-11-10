@@ -81,6 +81,7 @@
     "nodemon": "^2.0.13",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
+    "react-google-login": "^5.2.2",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
     "webpack": "^5.55.1",

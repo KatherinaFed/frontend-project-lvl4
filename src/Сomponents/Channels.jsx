@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 import store from '../store/index.js';
 import { setActiveChannel } from '../store/chatSlice.js';
-import { useTheme, useModal } from '../hooks/index.js';
+import { useTheme, useModal } from '../contexts/hooks/index.js';
 import darkMode from './darkMode/themes.js';
 import { AddChannel, RemoveChannel, RenameChannel } from './modals/modals.js';
 
