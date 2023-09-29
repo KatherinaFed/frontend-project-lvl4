@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import GoogleLogin from 'react-google-login';
 
 import loginJPG from '../../assets/images/login.jpg';
 import { useAuth, useTheme } from '../hooks/index.js';
@@ -142,18 +141,6 @@ const Login = () => {
               <div className="text-center">
                 <span>{t('loginForm.notHaveAccount')}</span>
                 <Link to="/signup">{t('loginForm.linkSignup')}</Link>
-              </div>
-              <div>
-                <p>или</p>
-              </div>
-              <div className="text-center">
-                <GoogleLogin
-                  clientId="699322443366-cadj5u8p5ar2f52acd74j48n1v3nsgnt.apps.googleusercontent.com"
-                  buttonText="Log in with Google"
-                  onSuccess={signInSuccess}
-                  onFailure={signInFailure}
-                  cookiePolicy="single_host_origin"
-                />
               </div>
             </Card.Footer>
           </Card>
