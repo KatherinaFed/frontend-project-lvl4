@@ -19,14 +19,6 @@ const logInSchema = Yup.object().shape({
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
 
-  const signInSuccess = (response) => {
-    console.log(response.profileObj);
-  };
-
-  const signInFailure = (response) => {
-    console.log(response.profileObj);
-  };
-
   const auth = useAuth();
   const history = useHistory();
   const { t } = useTranslation();
