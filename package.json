@@ -5,7 +5,7 @@
   "main": "src/runApp.jsx",
   "type": "module",
   "engines": {
-    "node": "18.x"
+    "node": "16.x"
   },
   "scripts": {
     "test": "echo 'no tests for this project'",
