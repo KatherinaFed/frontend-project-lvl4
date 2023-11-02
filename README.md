@@ -2,7 +2,7 @@
 
 ## Frontend Project #4 - Slack App (light version)
 
-### [Slack App](https://aqueous-savannah-88690.herokuapp.com/)
+### [Slack App](https://slack-chat-react-0e50481335ce.herokuapp.com/)
 
 ### Key technologies used in project:
 - React
